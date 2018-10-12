@@ -1,20 +1,30 @@
 package com.timeout.springbootdemo;
 
+import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Filters;
 import com.timeout.Application;
+import com.timeout.mongo.MongoService;
 import com.timeout.mongo.UserRepository;
 import com.timeout.prjo.User;
 
 @SuppressWarnings("deprecation")
 @RunWith(SpringRunner.class)
 //@SpringBootTest
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(
+		classes = Application.class)
 public class SpringBootDemoApplicationTests {
 
 //	@Test
@@ -35,8 +45,8 @@ public class SpringBootDemoApplicationTests {
 	@Autowired
 	private MongoTemplate MongoTemplate;
 
-	@Autowired
-	private UserRepository userRepository;
+//	@Autowired
+//	private UserRepository userRepository;
 
 //	@Before
 //	public void setUp() {
@@ -46,19 +56,34 @@ public class SpringBootDemoApplicationTests {
 	@Test
 	public void test() throws Exception {
 
+//		System.out.println(MongoTemplate.getDb().toString());
 		// 创建三个User，并验证User总数
-		userRepository.save(new User(1L, "didi", 30));
-		userRepository.save(new User(2L, "mama", 40));
-		userRepository.save(new User(3L, "kaka", 50));
-		MongoTemplate.insert(new User(4L, "LK", 11));
+//		userRepository.save(new User(1L, "didi", 30));
+//		userRepository.save(new User(2L, "mama", 40));
+//		userRepository.save(new User(3L, "kaka", 50));
+//		MongoTemplate.insert(new User(4L, "LK", 11));
+
+//		MongoTemplate.insert(new User(5L, "LK", 12));
 //		Assert.assertEquals(3, userRepository.findAll().size());
 
 //		// 删除一个User，再验证User总数
-//		Query query = new Query();
-//		query.addCriteria(Criteria.where("id").is(4L));
+		Query query = new Query();
+		query.addCriteria(Criteria.where("id").is(5L));
 //		query.fields();
-//		User u = MongoTemplate.findOne(query, User.class);
-//		MongoCollection<Document> collection = MongoTemplate.getCollection("user");
+		User u = MongoTemplate.findOne(query, User.class);
+		System.out.println(u.toString());
+//		MongoCollection<Document> collection = MongoTemplate.getCollection("aaa");
+//		Bson fite = Filters.eq("_id", 5L);
+//		Document document = collection.find(fite).first();
+//		System.out.println(document.toJson());
+//		Document document = new Document();
+//		document.put("_id", "asdas");
+//		document.put("name", "asdas");
+//		document.put("age", 22);
+//		MongoService.instance().insertIngore("lik", "aa2a", document);
+//		Bson fite = Filters.eq("_id", "asdas");
+//		Document document2 = MongoService.instance().queryOne("lik", "aaa", fite);
+//		System.out.println(document2.toJson());
 
 //		User u = userRepository.findById(4L);
 //		System.out.println(u.toString());
