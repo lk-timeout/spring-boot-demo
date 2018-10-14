@@ -8,8 +8,11 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,13 +22,28 @@ import org.springframework.stereotype.Service;
  * @version 1.0.0
  */
 @Service
-public class RedisService {
+public class RedisTemplateService {
 
 	@Resource
 	private RedisTemplate<Object, Object> redisTemplate;
 
 	public RedisTemplate<Object, Object> getInstance() {
 		return redisTemplate;
+	}
+
+	/**
+	 * 解决Redis乱码问题
+	 * 
+	 * @param redisTemplate
+	 */
+	@Autowired(required = false)
+	public void setRedisTemplate(RedisTemplate<Object, Object> redisTemplate) {
+		redisTemplate.setKeySerializer(new StringRedisSerializer());
+		redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+		redisTemplate.setHashKeySerializer(new GenericJackson2JsonRedisSerializer());
+		redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+		redisTemplate.afterPropertiesSet();
+		this.redisTemplate = redisTemplate;
 	}
 
 	/**

@@ -11,7 +11,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.timeout.Application;
-import com.timeout.redis.RedisService;
+import com.timeout.prjo.User;
+import com.timeout.redis.RedisTemplateService;
 
 @SuppressWarnings("deprecation")
 @RunWith(SpringRunner.class)
@@ -46,7 +47,7 @@ public class SpringBootDemoApplicationTests {
 //	}
 
 	@Autowired
-	private RedisService redisService;
+	private RedisTemplateService redisService;
 
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
@@ -109,8 +110,13 @@ public class SpringBootDemoApplicationTests {
 //		redisTemplate.opsForValue().set("aa", "2222", 1000, TimeUnit.SECONDS);
 //		stringRedisTemplate.opsForValue().se
 //		System.out.println(redisTemplate.opsForValue().get("bbbb"));
-		redisService.set("abc123456", "123456789");
-		System.out.println(redisService.get("abc123456"));
+//		redisService.set("lkwwwwww456", "123456789");
+//		System.out.println(redisService.get("lklll123456"));
+
+		User user = new User(123l, "lkkk", 12);
+		redisTemplate.opsForValue().set("asd", user);
+//		User user2 = (User) redisTemplate.opsForValue().get("asd");
+//		System.out.println(user2.toString());
 
 	}
 }
