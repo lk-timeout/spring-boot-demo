@@ -6,9 +6,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
+import org.springframework.stereotype.Service;
 
 /**
  * @author LK.TimeOut
@@ -16,9 +18,10 @@ import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
  * @Description redis 操作工具类
  * @version 1.0.0
  */
+@Service
 public class RedisService {
 
-	@Autowired
+	@Resource
 	private RedisTemplate<Object, Object> redisTemplate;
 
 	public RedisTemplate<Object, Object> getInstance() {

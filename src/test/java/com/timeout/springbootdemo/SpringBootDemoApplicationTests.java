@@ -1,6 +1,6 @@
 package com.timeout.springbootdemo;
 
-import java.util.concurrent.TimeUnit;
+import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +11,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.timeout.Application;
+import com.timeout.redis.RedisService;
 
 @SuppressWarnings("deprecation")
 @RunWith(SpringRunner.class)
@@ -43,10 +44,14 @@ public class SpringBootDemoApplicationTests {
 //	public void setUp() {
 //		userRepository.deleteAll();
 //	}
+
+	@Autowired
+	private RedisService redisService;
+
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
 
-	@Autowired
+	@Resource
 	private RedisTemplate<String, Object> redisTemplate;
 
 	@Test
@@ -100,10 +105,12 @@ public class SpringBootDemoApplicationTests {
 		// 保存字符串
 //		stringRedisTemplate.opsForValue().set("aaa", "111");
 //		Assert.assertEquals("111", stringRedisTemplate.opsForValue().get("aaa"));
-		redisTemplate.opsForValue().set("bbbb", "123");
-		redisTemplate.opsForValue().set("aa", "2222", 1000, TimeUnit.SECONDS);
+//		redisTemplate.opsForValue().set("bbbb", "123");
+//		redisTemplate.opsForValue().set("aa", "2222", 1000, TimeUnit.SECONDS);
 //		stringRedisTemplate.opsForValue().se
-		System.out.println(redisTemplate.opsForValue().get("bbbb"));
+//		System.out.println(redisTemplate.opsForValue().get("bbbb"));
+		redisService.set("abc123456", "123456789");
+		System.out.println(redisService.get("abc123456"));
 
 	}
 }
